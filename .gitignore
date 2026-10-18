@@ -12,6 +12,7 @@ env/
 __pycache__/
 **/__pycache__/
 *.py[cod]
+*$py.class
 
 # Django local database
 db.sqlite3
@@ -20,6 +21,17 @@ db.sqlite3
 # Generated static files
 staticfiles/
 
+# Uploaded media files (if applicable)
+media/
+
+# Logs
+*.log
+
+# Test and coverage files
+.coverage
+htmlcov/
+.pytest_cache/
+
 # IDE files
 .vscode/
 .idea/
@@ -27,3 +39,4 @@ staticfiles/
 # OS files
 Thumbs.db
 .DS_Store
+desktop.ini
