@@ -138,6 +138,13 @@
                     Create Account
                 </button>
 
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </form>
 
             <div class="auth-footer signup-footer">

@@ -79,14 +79,14 @@
                 <button type="submit" class="auth-button">
                     Log In
                 </button>
+                
+                {% if error %}
+                    <div class="alert error" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
 
             </form>
-
-            <div class="auth-divider">
-                <span></span>
-                <p>or continue with</p>
-                <span></span>
-            </div>
 
             <div class="auth-footer">
                 <p>Don't have an account?</p>

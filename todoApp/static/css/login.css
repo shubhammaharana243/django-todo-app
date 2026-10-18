@@ -185,6 +185,23 @@ body {
     text-decoration: underline;
 }
 
+
+
+.auth-container .auth-card .alert.error {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    color: #dc2626;
+    background-color: #fee2e2;
+    border: 1px solid #fca5a5;
+    padding: 12px 14px;
+    margin-top: 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
 /* ===== LOGIN BUTTON ===== */
 .auth-button {
     width: 100%;
@@ -257,6 +274,9 @@ body {
 .auth-footer a:hover {
     text-decoration: underline;
 }
+
+
+
 
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 480px) {
