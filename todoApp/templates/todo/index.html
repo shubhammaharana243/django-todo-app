@@ -1,0 +1,300 @@
+{% extends 'todo/layout.html' %}
+{% load static %}
+
+{% block title %}Dashboard | {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+
+{% block body %}
+    <header>
+        <nav>
+            <div class="nav">
+                <div class="logo">TO-DO</div>
+                
+                <div class="nav-serch">
+                    <div class="nav-search">
+
+                    <!-- Mobile search toggle -->
+                        <button
+                            type="button"
+                            class="mobile-search-toggle"
+                            aria-label="Open search"
+                            aria-expanded="false">
+
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="10.8" cy="10.8" r="6.8"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2" />
+                                <path d="M16 16 L21 21"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+
+                        <!-- Search form -->
+                        <form action="" method="get" class="search-form">
+                            <input
+                                type="text"
+                                name="search"
+                                placeholder="Search Tasks"
+                                value="{{ request.GET.search|default:'' }}">
+
+                            <button type="submit" aria-label="Search tasks">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="10.8" cy="10.8" r="6.8"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2" />
+                                    <path d="M16 16 L21 21"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="nav-user-opt">
+                    <div class="nav-user-opt-signout">
+                        <div class="profile-icon"><svg viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
+                                        fill="#000000"></path>
+                                    </g>
+                                </svg></div>
+                                <div class="signout">
+                                    <form action="{% url "logout" %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit">Sign Out</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="main-content">
+        
+        <!-- Dashboard Heading -->
+        <section class="dashboard-header">
+            <div class="welcome-text">
+                <h1>My Tasks</h1>
+                <p>Stay organized. Get things done.</p>
+            </div>
+            
+            <button type="button" class="add-task-btn">
+                <span>+</span>
+                Add Task
+            </button>
+        </section>
+
+
+        <!-- Task Summary Cards -->
+        <section class="task-summary">
+
+            <!-- Total Tasks -->
+            <div class="summary-card total-card">
+                <div class="summary-icon">📋</div>
+                
+                <div class="summary-info">
+                    <h3>Total Tasks</h3>
+                    <p class="total-count">{{ total }}</p>
+                </div>
+            </div>
+
+            <!-- Pending Tasks -->
+            <div class="summary-card pending-card">
+                <div class="summary-icon">⏳</div>
+                
+                <div class="summary-info">
+                    <h3>Pending</h3>
+                    <p>{{ pending }}</p>
+                </div>
+            </div>
+            
+            <!-- Completed Tasks -->
+            <div class="summary-card completed-card">
+                <div class="summary-icon">✅</div>
+                
+                <div class="summary-info">
+                    <h3>Completed</h3>
+                    <p class="completed-count">{{ completed }}</p>
+                </div>
+            </div>
+            
+        </section>
+        
+
+        <!-- Task List Section -->
+        <section class="tasks-section">
+            
+            <!-- Task List Header -->
+            <div class="tasks-header">
+                <div>
+                    <h2>Your Tasks</h2>
+                    <p>Manage all your tasks in one place.</p>
+                </div>
+            </div>
+
+            
+            <!-- Task Filters -->
+             {% if total %}
+                <div class="task-filters">
+                    <a href="{% url "index" %}?status=all"
+                    class="filter-btn {% if selected_status == 'all' %}active{% endif %}">
+                        All Tasks
+                    </a>
+
+                    <a href="{% url "index" %}?status=pending"
+                    class="filter-btn {% if selected_status == 'pending' %}active{% endif %}">
+                        Pending
+                    </a>
+
+                    <a href="{% url "index" %}?status=completed"
+                    class="filter-btn {% if selected_status == 'completed' %}active{% endif %}">
+                        Completed
+                    </a>
+                </div>
+            {% endif %}
+            
+            <!-- Add Task Form -->
+            <form class="add-task-form" id="add-task-form" method="POST" action="{% url "add" %}" hidden>
+                {% csrf_token %}
+                <label for="task-title">Task Title</label>
+                
+                <input type="text" id="task-title" name="title" placeholder="What do you need to do?">
+                
+                <div class="form-actions">
+                    <button type="submit" class="save-task-btn">
+                        Save Task
+                    </button>
+                    
+                    <button type="button" class="cancel-task-btn">
+                        Cancel
+                    </button>
+                </div>
+                
+            </form>
+
+            <form class="update-task-form" id="update-task-form" method="POST" hidden>
+                {% csrf_token %}
+                <label for="update-task-title">Task Title</label>
+                
+                <input type="text" id="update-task-title" name="update_title" placeholder="What do you need to do?">
+                
+                <div class="form-actions">
+                    <button type="submit" class="update-task-btn">
+                        Update Task
+                    </button>
+                    
+                    <button type="button" class="cancel-task-btn">
+                        Cancel
+                    </button>
+                </div>
+                
+            </form>
+            
+            
+            <!-- Tasks Table -->
+            <div class="task-list-container">
+                
+                <table class="task-table">
+
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    
+                    {% for task in tasks %}
+                    <tbody id="task-list">
+                        <tr data-status="pending">
+                            
+                            <td class="task-name">
+                                {{ task.title }}
+                            </td>
+                            
+                            <td>
+                                {% if task.is_completed %}
+                                    <span class="task-status completed-status">
+                                        Completed
+                                    </span>
+                                {% else %}
+                                    <span class="task-status pending-status">
+                                        Pending
+                                    </span>
+                                    {% endif %}
+                            </td>
+                            <td class="task-actions">
+                                <button
+                                    type="button"
+                                    class="edit-task-btn"
+                                    data-task-id="{{ task.id }}"
+                                    data-task-title="{{ task.title }}">
+                                    Edit
+                                </button>
+                                <form method="POST" action="{% url "iscompleted" task.id %}">
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="complete-task-btn">
+                                        {% if task.is_completed %}
+                                            Undo
+                                        {% else %}
+                                            Done
+                                        {% endif %}
+                                    </button>
+                                </form> 
+                                <form method="POST" action="{% url "delete" task.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-task-btn">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3">
+                                <div class="empty-state">
+                                    {% if search_not_found %}
+                                        <h3>Search not found</h3>
+                                        <p>No tasks match your search "{{ search }}".</p>
+                                    {% elif not filter_data_found %}
+                                        <h3>No records found for the selected filter.</h3>
+                                    {% else %}
+                                        <h3>No tasks found</h3>
+                                        <p>Add a new task to get started!</p>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <!-- Empty State -->
+                
+            </div>
+        </section>
+    </main>
+
+    {% endblock %}
+    
+{% block extra_js %}
+    <script src="{% static "js/script.js" %}"></script>
+{% endblock %}
