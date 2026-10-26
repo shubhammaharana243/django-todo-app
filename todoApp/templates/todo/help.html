@@ -1,0 +1,189 @@
+{% extends "todo/layout.html" %}
+
+{% block body %}
+
+<div class="help-container">
+
+    <!-- Hero Section -->
+    <section class="help-hero">
+        <span class="help-badge">SUPPORT CENTER</span>
+
+        <h1>How can we <span>help you?</span></h1>
+
+        <p>
+            Find answers to your questions and learn how to
+            manage your tasks more efficiently.
+        </p>
+
+        <div class="help-search">
+            <span class="search-icon">⌕</span>
+            <input
+                type="text"
+                id="faqSearch"
+                placeholder="Search for help..."
+                aria-label="Search frequently asked questions"
+            >
+        </div>
+    </section>
+
+    <!-- Quick Help -->
+    <section class="quick-help">
+        <h2>Quick Help</h2>
+        <p class="section-description">
+            Get started with the basics.
+        </p>
+
+        <div class="help-cards">
+
+            <a href="#add-task" class="help-card">
+                <div class="help-icon purple">＋</div>
+                <h3>Create a Task</h3>
+                <p>Learn how to add new tasks to your list.</p>
+                <span class="card-link">Learn more →</span>
+            </a>
+
+            <a href="#edit-task" class="help-card">
+                <div class="help-icon blue">✎</div>
+                <h3>Edit a Task</h3>
+                <p>Update your task details whenever needed.</p>
+                <span class="card-link">Learn more →</span>
+            </a>
+
+            <a href="#delete-task" class="help-card">
+                <div class="help-icon orange">⌫</div>
+                <h3>Delete a Task</h3>
+                <p>Remove tasks you no longer need.</p>
+                <span class="card-link">Learn more →</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-heading">
+            <div>
+                <h2>Frequently Asked Questions</h2>
+                <p class="section-description">
+                    Answers to common questions about your Todo App.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-list" id="faqList">
+
+            <details class="faq-item" id="add-task">
+                <summary>How do I create a new task?</summary>
+                <div class="faq-answer">
+                    Open your Todo dashboard, click the option to add a
+                    task, enter the required details, and save it.
+                </div>
+            </details>
+
+            <details class="faq-item" id="edit-task">
+                <summary>How can I edit an existing task?</summary>
+                <div class="faq-answer">
+                    Find the task you want to update and click its Edit
+                    button. Change the details and submit the form to
+                    save your changes.
+                </div>
+            </details>
+
+            <details class="faq-item" id="delete-task">
+                <summary>How do I delete a task?</summary>
+                <div class="faq-answer">
+                    Find the task you want to remove and click its Delete
+                    button. Check carefully before deleting because
+                    recovery may not be available.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Where are my tasks stored?</summary>
+                <div class="faq-answer">
+                    Your tasks are stored using the database configured
+                    for this application. Their persistence depends on
+                    your database and hosting configuration.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Can I use this app on my mobile phone?</summary>
+                <div class="faq-answer">
+                    Yes, this help page is responsive. Your dashboard
+                    will also need responsive styling for a good mobile
+                    experience.
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>What should I do if something goes wrong?</summary>
+                <div class="faq-answer">
+                    Check that you have entered the correct information.
+                    If the problem continues, use the support options
+                    below to report the issue.
+                </div>
+            </details>
+
+            <p class="no-results" id="noResults" hidden>
+                No matching questions found. Try another search.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="getting-started">
+        <div class="getting-content">
+            <span class="help-badge">GETTING STARTED</span>
+
+            <h2>Stay organized, one task at a time.</h2>
+
+            <p>
+                Create your tasks, keep track of your work, and
+                make your day more productive.
+            </p>
+
+            <a href="{% url 'index' %}" class="help-button">
+                Go to Dashboard →
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <h2>Still need help?</h2>
+
+        <p>
+            Found a bug or have an idea to improve this application?
+        </p>
+
+        <div class="contact-actions">
+            <a
+                href="https://github.com/shubhammaharana243"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-button github-button"
+            >
+                View GitHub
+            </a>
+
+            <a
+                href="https://github.com/shubhammaharana243"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-button report-button"
+            >
+                Report an Issue ↗
+            </a>
+        </div>
+
+        <p class="contact-note">
+            GitHub issue reporting opens your profile.
+            Replace the link with your project's repository URL.
+        </p>
+    </section>
+
+</div>
+
+{% endblock %}
