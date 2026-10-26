@@ -1,4 +1,11 @@
 {% extends "todo/layout.html" %}
+{% load static %}
+
+{% block title %}Dashboard | {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/help.css' %}">
+{% endblock %}
 
 {% block body %}
 
