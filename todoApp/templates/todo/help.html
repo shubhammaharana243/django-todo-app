@@ -186,4 +186,32 @@
 
 </div>
 
+<script>
+    const searchInput = document.getElementById("faqSearch");
+    const faqItems = document.querySelectorAll(".faq-item");
+    const noResults = document.getElementById("noResults");
+
+    searchInput.addEventListener("input", function () {
+        const query = this.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        faqItems.forEach(function (item) {
+            const question = item.querySelector("summary").textContent;
+            const answer = item.querySelector(".faq-answer").textContent;
+
+            const matches = (question + " " + answer)
+                .toLowerCase()
+                .includes(query);
+
+            item.hidden = !matches;
+
+            if (matches) {
+                visibleCount++;
+            }
+        });
+
+        noResults.hidden = visibleCount !== 0;
+    });
+</script>
+
 {% endblock %}
