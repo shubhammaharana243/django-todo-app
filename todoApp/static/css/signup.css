@@ -46,6 +46,7 @@ body {
 }
 
 .support {
+    text-decoration: none;
     padding: 10px 14px;
     min-height: 40px;
     border-radius: 6px;
@@ -61,12 +62,13 @@ body {
 }
 
 .support p {
+    text-decoration: none;
     color: #ffffff;
     margin: 0;
     font-size: 14px;
 }
 
-.support span {
+a.support span {
     display: flex;
     align-items: center;
 }
@@ -74,6 +76,16 @@ body {
 .support svg {
     width: 18px;
     height: 18px;
+}
+
+a.support,
+a.support:link,
+a.support:visited,
+a.support:hover,
+a.support:active,
+a.support:focus {
+    text-decoration: none !important;
+    color: #ffffff;
 }
 
 /* ===== LOGIN CONTAINER ===== */
