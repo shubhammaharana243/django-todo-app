@@ -193,32 +193,64 @@
 
 </div>
 
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("faqSearch");
     const faqItems = document.querySelectorAll(".faq-item");
     const noResults = document.getElementById("noResults");
+    const searchButton = document.getElementById("searchButton");
 
-    searchInput.addEventListener("input", function () {
-        const query = this.value.toLowerCase().trim();
+    function searchFAQs() {
+        const query = searchInput.value.toLowerCase().trim();
         let visibleCount = 0;
+        let firstMatch = null;
 
         faqItems.forEach(function (item) {
-            const question = item.querySelector("summary").textContent;
-            const answer = item.querySelector(".faq-answer").textContent;
+            const question = item.querySelector("summary");
+            const answer = item.querySelector(".faq-answer");
 
-            const matches = (question + " " + answer)
-                .toLowerCase()
-                .includes(query);
+            const text = (
+                (question ? question.textContent : "") + " " +
+                (answer ? answer.textContent : "")
+            ).toLowerCase();
+
+            const matches = text.includes(query);
 
             item.hidden = !matches;
 
             if (matches) {
                 visibleCount++;
+
+                if (!firstMatch) {
+                    firstMatch = item;
+                }
             }
         });
 
-        noResults.hidden = visibleCount !== 0;
-    });
-</script>
+        noResults.hidden = visibleCount > 0;
 
+        // Scroll only after Enter or search icon click
+        if (query && firstMatch) {
+            firstMatch.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+    }
+
+    // Search only when Enter is pressed
+    searchInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            searchFAQs();
+        }
+    });
+
+    // Search when the search icon/button is clicked
+    if (searchButton) {
+        searchButton.addEventListener("click", searchFAQs);
+    }
+});
+</script>
 {% endblock %}
