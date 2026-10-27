@@ -35,14 +35,10 @@ def index(request):
         if not tasks:
             filter_data_found = False
 
-    
-
     if tasks:
         if search:
             tasks = tasks.filter(title__icontains=search)
     
-
-
     search_not_found = bool(search and not tasks.exists())
 
     
@@ -175,3 +171,6 @@ def delete_view(request, task_id):
 
         task.delete()
     return redirect("index")
+
+def helpview(request):
+    return render(request, "todo/help.html")
