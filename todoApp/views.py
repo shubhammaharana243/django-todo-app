@@ -116,15 +116,14 @@ def logout_view(request):
 
 @login_required
 def add_task(request):
-    print("faH")
     if request.method == "POST":
-        print("add")
         title=request.POST.get("title")
-
-        Task.objects.create(
-            title=title,
-            owner=request.user
-        )
+        
+        if title:
+            Task.objects.create(
+                title=title,
+                owner=request.user
+            )
 
     return redirect("index")
     
